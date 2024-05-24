@@ -1,0 +1,148 @@
+struct Player{
+    
+    int score;
+    char name;
+
+}P1,P2,P3,P4;
+
+int KEYPAD[4][4] = {0};
+
+int main (int argc, char* argv[]){
+    
+    if(argc!=5)     //4명 입력이 아닌 경우
+        print_clcd('requires','4 players');
+
+    P1.name = argv[1];
+    P2.name = argv[2];
+    P3.name = argv[3];
+    P4.name = argv[4];
+
+    reset_game();
+    
+    while(P1.score != 0 && P2.score != 0 && P3.score != 0 && P4.score != 0)
+    {
+        print_clcd(P1.name,'ATTACK');
+
+        i=PRESS_A();
+        if (i==0)
+            P1.score = P1.score - 1;   // 이상한거 누르면 A 감점
+    
+        i=PRESS_B();
+        if (i==0)
+            P2.score = P2.score -1;  // 이상한거 누르면 B 감점
+
+        i=PRESS_C();
+        if (i==0)
+            P3.score = P3.score -1;  // 이상한거 누르면 C 감점
+
+        i=PRESS_D();
+        if (i==0)
+            P4.score = P4.score -1;  // 이상한거 누르면 D 감점
+
+        compare_data();
+        show_score();
+        clear_KEYPAD();
+
+    }
+    //패배한 사람 계산
+    //패배한 사람 보여주기
+    return 0;
+}
+
+void print_clcd(char char1,char char2)
+{
+        clcd_clear_display(); //clcd 초기화
+        clcd_entry_mode_set(1, 0);  //입력 방향 결정
+        clcd_set_DDRAM(strlen(char1) - 1);
+        clcd_write_string(char1); //clcd 첫째줄 char1 출력
+
+        clcd_set_DDRAM(0x40 + strlen(char2) - 1);
+        clcd_write_string(char2); //clcd 둘째줄 char2 출력
+}
+
+int reset_game()
+{
+    KEYPAD[4][4] = {0};
+    
+    P1.score = 10;
+    P2.score = 10;
+    P3.score = 10;
+    P4.score = 10;
+
+    show_score();
+
+    print_clcd('GAME','START');
+
+    // DOT MATRIX 깜빡
+    // LED 깜빡
+
+    //아무 버튼이나 누르면 다음 단계로 넘어가기
+    return 0;
+}
+
+int PRESS_A (){
+
+    // DM에 "P1" 표시
+    // rising edge에 input 배열에 저장+키패드 입력 받을때마다 값 바뀌기
+    if (KEYPAD[0][0]+KEYPAD[0][1]+KEYPAD[0][2]+KEYPAD[0][3]==2)
+        return 1;
+    else
+        return 0;
+}
+
+int PRESS_B (){
+
+    // DM에 "P2" 표시
+    // rising edge에 input 배열에 저장
+    if (KEYPAD[1][0]+KEYPAD[1][1]+KEYPAD[1][2]+KEYPAD[1][3]==2)
+        return 1;
+    else
+        return 0;
+}
+
+int PRESS_C (){
+
+    // DM에 "P3" 표시
+    // rising edge에 input 배열에 저장
+    if (KEYPAD[2][0]+KEYPAD[2][1]+KEYPAD[2][2]+KEYPAD[2][3]==2)
+        return 1;
+    else
+        return 0;
+}
+
+int PRESS_D (){
+
+    clcd_write_string()    
+    // DM에 "P4" 표시
+    // rising edge에 input 배열에 저장
+    if (KEYPAD[3][0]+KEYPAD[3][1]+KEYPAD[3][2]+KEYPAD[3][3]==2)
+        return 1;
+    else
+        return 0;
+}
+
+void show_score()
+{
+
+}
+
+clear_KEYPAD()
+{
+    KEYPAD[][]={0};
+}
+
+int compare_data(int player_number)
+{
+    int s1,s2,s3,s4;
+
+    for(i=0;i<4;i++)
+    {
+       if(KEYPAD[][]==KEYPAD[][])
+    }
+}
+
+int final(){
+    /*
+    1. LCD에 진 사람 띄우기
+    */
+}
