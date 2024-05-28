@@ -153,8 +153,8 @@ int PRESS(int p) {  //Pi에 대해서 입력 받아오기 : 다른거 눌렀을 
         print_clcd('PRESS', 'ERROR');
         break;
     }
-    read_KEYPAD();    // 첫번째 눌린 위치 받아오기
-    read_KEYPAD();    // 두번째 눌린 위치 받아오기
+    read_KEYPAD(p);    // 첫번째 눌린 위치 받아오기
+    read_KEYPAD(p);    // 두번째 눌린 위치 받아오기
 
     if (KEYPAD[p - 1][0] + KEYPAD[p - 1][1] + KEYPAD[p - 1][2] + KEYPAD[p - 1][3] == 2)
         return 1;
@@ -162,17 +162,18 @@ int PRESS(int p) {  //Pi에 대해서 입력 받아오기 : 다른거 눌렀을 
         return 0;
 }
 
-void light_KEYPAD() {    //keypad에 데이터가 입력되는 순간, LED와 DOT MATRIX 깜빡이기
+void light_KEYPAD(player) {    //keypad에 데이터가 입력되는 순간, LED와 DOT MATRIX 깜빡이기
     // 깜빡임 정도는 각 함수 별로 usleep의 parameter을 조정하면 됨
     // LED 깜빡이기
     led_blink_all();    // 기존 실습에서 썼던 led.h와 led.c에 선언 및 정의
+
     // DOT MATRIX 깜빡이기
-    dot_inverse();      // 기존 실습에서 제공된 skeleton code(dot.h, dot.c)에 우리 팀이 code을 추가하여 수정한 함수
-                        // dot_inverse()을 dot.c와 dot.h에 정의하여 깃허브에 업로드하겠음
+    // dot_inverse()을 dot.c와 dot.h에 정의하여 깃허브에 업로드하겠음
+    dot_inverse(player);      // 기존 실습에서 제공된 skeleton code(dot.h, dot.c)에 우리 팀이 code을 추가하여 수정한 함수
 }
 
 // read_KEYPAD() 선언 및 정의에 따라 기존 실습에서 썼던 keypad.h와 keypad.c 내 keypad_read는 불필요
-void read_KEYPAD() { //keypad에 데이터가 입력되는 순간, 입력된 데이터 받아와서 업데이트하기
+void read_KEYPAD(int player) { //keypad에 데이터가 입력되는 순간, 입력된 데이터 받아와서 업데이트하기
     int key_value = 0;
     short key_temp;
 
@@ -185,11 +186,10 @@ void read_KEYPAD() { //keypad에 데이터가 입력되는 순간, 입력된 데
                 key_value = (row * 4) + col;
         }
     }
-    light_KEYPAD();
+    light_KEYPAD(player);
     KEYPAD[key_value / 4][key_value % 4] = 1;   // 입력된 키패드의 번호에 대응되는 배열 ON
 }
 
-// keypad.c에 init_KEYPAD()가 있어서 필요성 의문
 void clear_KEYPAD() {
     memset(KEYPAD, '0', sizeof(KEYPAD)); //keypad 데이터 초기화 : memset 헤더파일 포함
 }
