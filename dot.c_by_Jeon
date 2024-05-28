@@ -51,11 +51,11 @@ void dot_inverse(int decimal) {
 	int shift, i;
 	for (shift = 0; shift < 3; shift++) {
 		for (i = 0; i < MAX_DOT; i++) {
-			*dot[i] = dot_decimal[decimal][i];
+			*dot[i] = dot_hexadecimal[decimal][i];
 		}
 		usleep(300000);
 		for (i = 0; i < MAX_DOT; i++) {
-			*dot[i] = ~dot_decimal[decimal][i];
+			*dot[i] = ~dot_hexadecimal[decimal][i];
 		}
 		usleep(300000);
 	}
