@@ -1,6 +1,4 @@
-#include <string.h>
-#include <stdio.h>
-#include "main.h"
+#include "main.h"       //반드시 넣을 것!
 
 struct Player {
 
@@ -9,7 +7,7 @@ struct Player {
 
 }P1, P2, P3, P4;
 
-int KEYPAD[4][4] = { 0, };
+int KEYPAD[4][4] = { 0 };
 
 static off_t IEB_DOT[MAX_DOT] = {
     IEB_DOT1,
@@ -18,6 +16,7 @@ static off_t IEB_DOT[MAX_DOT] = {
     IEB_DOT4,
     IEB_DOT5
 };
+
 static off_t IEB_FND[MAX_FND] = {
     IEB_FND0,
     IEB_FND1,
@@ -29,13 +28,13 @@ static off_t IEB_FND[MAX_FND] = {
     IEB_FND7
 };
 
-
 static int fd;
 static int map_counter = 0;
 static void* map_data[100];
 
-int main(int argc, char* argv[]) {
+//여기에 키패드 관련 초기설정 추가
 
+int main(int argc, char* argv[]) {
 
     int i;
     short* led, * dot[MAX_DOT], * fnd[MAX_FND];
@@ -69,7 +68,7 @@ int main(int argc, char* argv[]) {
 
     while (1) {    //게임이 돌아가는 중
         reset_game();
-
+        
         int n_round = 0;  //라운드
         int turn;   //누구의 차례일까요?
 
