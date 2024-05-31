@@ -49,8 +49,13 @@ void fnd_write(int hexadecimal, int fnd_num) {
 
 void fnd_hexa_number(unsigned long number) {
 	int i;
-	for(i=0; i<MAX_FND; i++){
-		fnd_write( (short)(number & 0x1), i); // f->1로 변경
-		number = number >> 1; // 4-> 1로 변경
+	 while (number > 0 && i < MAX_FND) {
+ 	   int digit = number % 10;
+ 	   fnd_write(digit, i);
+ 	   number = number / 10;
+ 	   i++;
+	 }
+    }
+
 	}
 }
