@@ -49,12 +49,11 @@ void fnd_write(int hexadecimal, int fnd_num) {
 
 void fnd_hexa_number(unsigned long number) {
 	int i;
-	 while (number > 0 && i < MAX_FND) {
- 	   int digit = number % 10;
- 	   fnd_write(digit, i);
- 	   number = number / 10;
- 	   i++;
-	 }
+	for (i = 0; i < MAX_FND; i++) {
+		int digit = number % 10;
+		fnd_write(digit, i);
+		number = number / 10;
+	}
     }
 
 	}
