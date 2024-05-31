@@ -178,7 +178,6 @@ void reset_game() {      // 키패드 초기화하고 clcd에 시작 문구, fnd
     show_score();
     print_clcd('GAME', 'START');
 
-    light_KEYPAD();
     clear_KEYPAD();
 }
 
@@ -213,7 +212,8 @@ int PRESS(int p) {  //Pi에 대해서 입력 받아오기 : 다른거 눌렀을 
         return 0;
 }
 
-void light_KEYPAD(player) {    //keypad에 데이터가 입력되는 순간, LED와 DOT MATRIX 깜빡이기
+void light_KEYPAD(player) {    //완성
+    //keypad에 데이터가 입력되는 순간, LED와 DOT MATRIX 깜빡이기
     // 깜빡임 정도는 각 함수 별로 usleep의 parameter을 조정하면 됨
     // LED 깜빡이기
     led_blink_all();    // 기존 실습에서 썼던 led.h와 led.c에 선언 및 정의
@@ -249,7 +249,6 @@ void show_score() {
     int score = P1.score * 1000 + P2.score * 100 + P3.score * 10 + P4.score; //총합 스코어 계산
 
     fnd_hexa_number(score); //fnd 스코어 출력
-    //fnd에 P1.score, ....가 출력되게 하는 함수 만들어주세요.
 }
 
 void compare_data(int player_number) //이번 라운드에 잃은 점수 계산
@@ -302,33 +301,6 @@ void final() {    //패배한 사람 찾고, clcd에 띄우기
     clear_KEYPAD();
 }
 
-
-/*
-위에 쓰인 함수들 기능이 문제가 없는지 확인해야합니다. 코드를 완전히 이해한 후에
-1.
-light_keypad 채우기 : 주석 유의사항 참고. 이거 안되면 interrupt로 처음부터 코드 새로 짜야할듯?
-light_keypad 기능구현용 테스트 코드
-
-read_keypad 채우기
-read_keypad 기능군현용 테스트 코드
-
-2.
-print_clcd 기능구현용 테스트 코드 : 연속 2개의 print_clcd가 사용되었을 때 첫 코드와 두번째 코드가 정상적으로 출력되는지 확인
-
-show_score 채우기
-show_score 기능구현용 테스트 코드
-
-data_dot_matrix 채우기 -> dot_write(0 to 3); a 에서 d 출력
-data_dot_matrix 기능구현용 테스트 코드 
-
-clear_dot_matrix 채우기 -> dot_clear();
-clear_dot_matrix 기능구현용 테스트 코드
-
-press 기능구현용 테스트 코드 
-
-요렇게 만들어주시면 될거같슴다.
-*/
-
 short* mapper(off_t offset) {
     map_data[map_counter] = mmap(NULL, sizeof(short), PROT_WRITE, MAP_SHARED, fd, offset);
     if (map_data[map_counter] == MAP_FAILED) {
@@ -351,7 +323,6 @@ void emergency_closer() {
     close(fd);
     exit(EXIT_FAILURE);
 }
-
 
 void error() {
     dot_error();
